@@ -24,7 +24,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  })
+  }),
 );
 
 app.use("/api/auth", authRoutes);
@@ -39,13 +39,12 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Connect DB first, then start server
-connectDB().then(() => {
-  server.listen(PORT, () => {
-    console.log("Server is running on PORT:", PORT);
+connectDB()
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log("Server is running on PORT:", PORT);
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to connect to MongoDB:", err);
   });
-}).catch((err) => {
-  console.error("Failed to connect to MongoDB:", err);
-});
-app.get("/", (req, res) => {
-  res.send("Backend is working 🚀");
-});
